@@ -102,8 +102,8 @@ entity LeaveRequests {
   approver       : Association to Employees;
 
   @title : 'Created At'
-  createdat      : Timestamp;
+  createdat      : Date;
 
   @title : 'Updated At'
-  updatedat      : Timestamp;
+  updatedat      : Date;
 }

@@ -95,7 +95,11 @@ annotate el.Employees with @(UI: {
 
 
 // Table - B  Leave_Details
+@odata.draft.enabled
 annotate el.LeaveTypes with @(UI: {
+    CreateHidden : false,
+    DeleteHidden : false,
+    UpdateHidden : false,
     HeaderInfo                  : {
         TypeName      : 'Leave Type',
         TypeNamePlural: 'Leave Types',
