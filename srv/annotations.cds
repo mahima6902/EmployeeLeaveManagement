@@ -2,7 +2,7 @@ using app.emp_leave as el from '../db/elm';
 
 
 // Table - A  Employee_Details
-//@odata.draft.enabled
+@odata.draft.enabled
 annotate el.Employees with @(UI: {
     CreateHidden : false,
     DeleteHidden : false,
@@ -58,7 +58,6 @@ annotate el.Employees with @(UI: {
             Label : 'Employee Details',
             Target: '@UI.FieldGroup#EmployeeDetails'
         },
-
         {
             $Type : 'UI.ReferenceFacet',
             Label : 'Leave Balances',
@@ -100,7 +99,6 @@ annotate el.Employees with @(UI: {
 
 
 // Table - B  Leave_Details
-//@odata.draft.enabled
 annotate el.LeaveTypes with @(UI: {
     CreateHidden : false,
     DeleteHidden : false,
@@ -139,9 +137,8 @@ annotate el.LeaveTypes with @(UI: {
     Facets                      : [{
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Type Details',
-        Target: '@UI.FieldGroup#nameDetails'
+        Target: '@UI.FieldGroup#LeaveDetails'
     },
-
     {
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Type Details',
@@ -149,17 +146,6 @@ annotate el.LeaveTypes with @(UI: {
     }
     ],
 
-    FieldGroup #nameDetails: {Data: [
-        {
-            Value: leavetypeid,
-            Label: 'Leave Type ID'
-        },
-        {
-            Value: name,
-            Label: 'Name'
-        },
-    ]
-    },
     FieldGroup #LeaveTypeDetails: {Data: [
         {
             Value: leavetypeid,
@@ -172,6 +158,12 @@ annotate el.LeaveTypes with @(UI: {
         {
             Value: daysallowed,
             Label: 'Days Allowed'
+        }
+    ]},
+    FieldGroup #LeaveDetails: {Data: [
+        {
+            Value: name,
+            Label: 'Name'
         }
     ]}
 });
@@ -217,7 +209,6 @@ annotate el.LeaveBalances with @(UI: {
         Label : 'Leave Balance Details',
         Target: '@UI.FieldGroup#LeaveBalanceDetails'
     },
-
     {
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Balance Details',
@@ -225,17 +216,6 @@ annotate el.LeaveBalances with @(UI: {
     }
     ],
 
-    FieldGroup #LeaveBalanceDetails: {Data: [
-        {
-            Value: employee.employeeid,
-            Label: 'Employee ID'
-        },
-        {
-            Value: leavetype.name,
-            Label: 'Leave Type'
-        }
-    ]
-    },
     FieldGroup #DaysDetails: {Data: [
         {
             Value: totaldays,
@@ -249,11 +229,22 @@ annotate el.LeaveBalances with @(UI: {
             Value: remainingdays,
             Label: 'Remaining Days'
         }
+    ]},
+    FieldGroup #LeaveBalanceDetails: {Data: [
+        {
+            Value: employee.employeeid,
+            Label: 'Employee ID'
+        },
+        {
+            Value: leavetype.name,
+            Label: 'Leave Type'
+        }
     ]}
 });
 
 
 // Table - D  Request_Details
+@odata.draft.enabled
 annotate el.LeaveRequests with @(UI: {
     CreateHidden : false,
     DeleteHidden : false,
@@ -275,6 +266,10 @@ annotate el.LeaveRequests with @(UI: {
 
     LineItem                       : [
         {
+            Value: requestid,
+            Label: 'Request ID'
+        },
+        {
             Value: employee.employeeid,
             Label: 'Employee ID'
         },
@@ -293,37 +288,37 @@ annotate el.LeaveRequests with @(UI: {
         {
             Value: status,
             Label: 'Status'
+        },
+        {
+            Value: reason,
+            Label: 'Reason'
+        },
+        {
+            Value: approver_employeeid,
+            Label: 'Approver'
+        },
+        {
+            Value: createdat,
+            Label: 'Created At'
+        },
+        {
+            Value: updatedat,
+            Label: 'Updated At'
         }
     ],
 
     Facets                         : [{
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Request Details',
-        Target: '@UI.FieldGroup#LeaveRequestDetails'
+        Target: '@UI.FieldGroup#LeaveeDetails'
     },
-
     {
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Request Details',
-        Target: '@UI.FieldGroup#statusDetails'
+        Target: '@UI.FieldGroup#timeDetails'
     }], 
 
-    FieldGroup #LeaveRequestDetails: {Data: [
-        {
-            Value: employee.employeeid,
-            Label: 'Employee ID'
-        },
-        {
-            Value: leavetype.name,
-            Label: 'Leave Type'
-        },
-        {
-            Value: approver.employeeid,
-            Label: 'Approver ID'
-        }
-    ]
-    },
-    FieldGroup #statusDetails: {Data: [
+    FieldGroup #timeDetails: {Data: [
         {
             Value: startdate,
             Label: 'Start Date'
@@ -339,6 +334,32 @@ annotate el.LeaveRequests with @(UI: {
         {
             Value: status,
             Label: 'Status'
+        },
+        {
+            Value: createdat,
+            Label: 'Created At'
+        },
+        {
+            Value: updatedat,
+            Label: 'Updated At'
+        }
+    ]},
+    FieldGroup #LeaveeDetails: {Data: [
+        {
+            Value: requestid,
+            Label: 'Request ID'
+        },
+        {
+            Value: employee.employeeid,
+            Label: 'Employee ID'
+        },
+        {
+            Value: leavetype.name,
+            Label: 'Leave Type'
+        },
+        {
+            Value: approver.employeeid,
+            Label: 'Approver ID'
         }
     ]}
 });
