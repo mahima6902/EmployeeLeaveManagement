@@ -2,7 +2,11 @@ using app.emp_leave as el from '../db/elm';
 
 
 // Table - A  Employee_Details
+//@odata.draft.enabled
 annotate el.Employees with @(UI: {
+    CreateHidden : false,
+    DeleteHidden : false,
+    UpdateHidden : false,
     HeaderInfo                 : {
         TypeName      : 'Employee',
         TypeNamePlural: 'Employees',
@@ -54,6 +58,7 @@ annotate el.Employees with @(UI: {
             Label : 'Employee Details',
             Target: '@UI.FieldGroup#EmployeeDetails'
         },
+
         {
             $Type : 'UI.ReferenceFacet',
             Label : 'Leave Balances',
@@ -95,7 +100,7 @@ annotate el.Employees with @(UI: {
 
 
 // Table - B  Leave_Details
-@odata.draft.enabled
+//@odata.draft.enabled
 annotate el.LeaveTypes with @(UI: {
     CreateHidden : false,
     DeleteHidden : false,
@@ -134,10 +139,17 @@ annotate el.LeaveTypes with @(UI: {
     Facets                      : [{
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Type Details',
-        Target: '@UI.FieldGroup#LeaveTypeDetails'
-    }],
+        Target: '@UI.FieldGroup#nameDetails'
+    },
 
-    FieldGroup #LeaveTypeDetails: {Data: [
+    {
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Leave Type Details',
+        Target: '@UI.FieldGroup#LeaveTypeDetails'
+    }
+    ],
+
+    FieldGroup #nameDetails: {Data: [
         {
             Value: leavetypeid,
             Label: 'Leave Type ID'
@@ -145,6 +157,13 @@ annotate el.LeaveTypes with @(UI: {
         {
             Value: name,
             Label: 'Name'
+        },
+    ]
+    },
+    FieldGroup #LeaveTypeDetails: {Data: [
+        {
+            Value: leavetypeid,
+            Label: 'Leave Type ID'
         },
         {
             Value: description,
@@ -160,6 +179,9 @@ annotate el.LeaveTypes with @(UI: {
 
 // Table - C  Balance_Details
 annotate el.LeaveBalances with @(UI: {
+    CreateHidden : false,
+    DeleteHidden : false,
+    UpdateHidden : false,
     HeaderInfo                     : {
         TypeName      : 'Leave Balance',
         TypeNamePlural: 'Leave Balances',
@@ -194,7 +216,14 @@ annotate el.LeaveBalances with @(UI: {
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Balance Details',
         Target: '@UI.FieldGroup#LeaveBalanceDetails'
-    }],
+    },
+
+    {
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Leave Balance Details',
+        Target: '@UI.FieldGroup#DaysDetails'
+    }
+    ],
 
     FieldGroup #LeaveBalanceDetails: {Data: [
         {
@@ -204,7 +233,10 @@ annotate el.LeaveBalances with @(UI: {
         {
             Value: leavetype.name,
             Label: 'Leave Type'
-        },
+        }
+    ]
+    },
+    FieldGroup #DaysDetails: {Data: [
         {
             Value: totaldays,
             Label: 'Total Days'
@@ -223,6 +255,9 @@ annotate el.LeaveBalances with @(UI: {
 
 // Table - D  Request_Details
 annotate el.LeaveRequests with @(UI: {
+    CreateHidden : false,
+    DeleteHidden : false,
+    UpdateHidden : false,
     HeaderInfo                     : {
         TypeName      : 'Leave Request',
         TypeNamePlural: 'Leave Requests',
@@ -265,7 +300,13 @@ annotate el.LeaveRequests with @(UI: {
         $Type : 'UI.ReferenceFacet',
         Label : 'Leave Request Details',
         Target: '@UI.FieldGroup#LeaveRequestDetails'
-    }],
+    },
+
+    {
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Leave Request Details',
+        Target: '@UI.FieldGroup#statusDetails'
+    }], 
 
     FieldGroup #LeaveRequestDetails: {Data: [
         {
@@ -276,6 +317,13 @@ annotate el.LeaveRequests with @(UI: {
             Value: leavetype.name,
             Label: 'Leave Type'
         },
+        {
+            Value: approver.employeeid,
+            Label: 'Approver ID'
+        }
+    ]
+    },
+    FieldGroup #statusDetails: {Data: [
         {
             Value: startdate,
             Label: 'Start Date'
@@ -291,10 +339,6 @@ annotate el.LeaveRequests with @(UI: {
         {
             Value: status,
             Label: 'Status'
-        },
-        {
-            Value: approver.employeeid,
-            Label: 'Approver ID'
         }
     ]}
 });

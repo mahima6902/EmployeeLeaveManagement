@@ -35,7 +35,8 @@
     },
     "requires": {
       "db": {
-        "kind": "hana-cloud"
+        "kind": "hana-cloud",
+        "schema": "216E5037204842B3859726CF7F80533F"
       },
       "credentials": {
         "database": "emp_leave.db"
